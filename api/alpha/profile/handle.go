@@ -54,7 +54,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
 			return
 		}
-		pp, err := GetProfile(p)
+		pp, err := SaveProfile(p)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))

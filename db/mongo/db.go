@@ -3,10 +3,9 @@ package mongo
 import (
 	"fmt"
 
-	"encoding/json"
-
 	"github.com/kubicorn/kubicorn/pkg/logger"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type MongoOptions struct {
@@ -46,12 +45,12 @@ func GetMongo() *Mongo {
 func (m *Mongo) Save(domain, namespace string, object interface{}) (string, error) {
 	db := m.Session.DB(domain)
 	collection := db.C(namespace)
-	i, err := collection.Upsert(object, object)
+	i, err := collection.Upsert(object, bson.M{"$set": object})
 	if err != nil {
 		return "", fmt.Errorf("Unable to upsert into mongo: %v", err)
 	}
-	bytes, _ := json.Marshal(i.UpsertedId)
-	return string(bytes), nil
+	bsonId := i.UpsertedId.(bson.ObjectId)
+	return bsonId.Hex(), nil
 }
 
 func (m *Mongo) Get(domain, namespace string, query, new interface{}) (interface{}, error) {
