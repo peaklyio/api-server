@@ -4,11 +4,13 @@ import (
 	"net/http"
 
 	"github.com/kubicorn/kubicorn/pkg/logger"
+	"github.com/peaklyio/api-server/api/alpha/profile"
 )
 
 var (
 	routes = map[string]http.HandlerFunc{
-		"/": nothingHandler,
+		"/":        RootHandler,
+		"/profile": profile.ProfileHandler,
 	}
 )
 

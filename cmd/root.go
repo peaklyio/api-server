@@ -18,12 +18,17 @@ import (
 	"os"
 
 	"github.com/kubicorn/kubicorn/pkg/logger"
+	"github.com/peaklyio/api-server/db/mongo"
 	"github.com/peaklyio/api-server/server"
 	"github.com/spf13/cobra"
 )
 
 var (
-	o = &server.ServerOptions{}
+	o = &server.ServerOptions{
+		DatabaseOptions: &server.DatabaseOptions{
+			MongoOptions: &mongo.MongoOptions{},
+		},
+	}
 )
 
 var RootCmd = &cobra.Command{
@@ -54,4 +59,7 @@ func init() {
 	RootCmd.Flags().StringVarP(&o.BindAddress, "bind-address", "a", "0.0.0.0", "The bind address for the server")
 	RootCmd.Flags().IntVarP(&o.BindPort, "bind-port", "p", 80, "The bind port for the server")
 	RootCmd.PersistentFlags().IntVarP(&logger.Level, "verbose", "v", 4, "Verbosity level 0 (off) to 4 (most).")
+	RootCmd.Flags().StringVarP(&o.DatabaseOptions.MongoOptions.Address, "mongo-address", "M", "localhost", "The address to look for a mongo server")
+	RootCmd.Flags().StringVarP(&o.Domain, "domain", "d", "peakly", "The master domain string to use for the database.")
+	RootCmd.Flags().IntVarP(&o.DatabaseOptions.MongoOptions.Port, "mongo-port", "m", 27017, "The port to use when looking for a mongo server")
 }
