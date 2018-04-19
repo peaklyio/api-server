@@ -14,8 +14,41 @@ const Namespace = "profile"
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	logger.Debug("/profile [%s]", r.Method)
 	switch r.Method {
+
+	// -----------------------------------------------------------------------------------------------------------------
+	//
+	// [GET]
+	//
+	//
 	case "GET":
 		p, err := getProfile(r)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+			return
+		}
+		pp, err := GetProfile(p)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+			return
+		}
+		bytes, err := json.Marshal(pp)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(fmt.Sprintf("500 - Internal server error: %v\n", err)))
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write(bytes)
+		return
+	// -----------------------------------------------------------------------------------------------------------------
+	//
+	// [POST]
+	//
+	//
+	case "POST":
+		p, err := getPostProfile(r)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
