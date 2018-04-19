@@ -5,9 +5,11 @@ import (
 	"net/http"
 
 	"github.com/kubicorn/kubicorn/pkg/logger"
+	api "github.com/peaklyio/api-server/api/alpha"
 )
 
 func ListenAndServe(options *ServerOptions) error {
+	api.RegisterHandler()
 	addr := fmt.Sprintf("%s:%d", options.BindAddress, options.BindPort)
 	logger.Info("Starting server [%s]", addr)
 	if options.EnableTLS {

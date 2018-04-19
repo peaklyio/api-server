@@ -52,5 +52,6 @@ func init() {
 	// TODO @kris-nova TLS needs to be fleshed out more
 	RootCmd.Flags().BoolVarP(&o.EnableTLS, "enable-tls", "t", false, "Enable TLS for the server (Requires TLS flags to be set)")
 	RootCmd.Flags().StringVarP(&o.BindAddress, "bind-address", "a", "0.0.0.0", "The bind address for the server")
-	RootCmd.Flags().IntVarP(&o.BindPort, "bind-address", "a", 80, "The bind port for the server")
+	RootCmd.Flags().IntVarP(&o.BindPort, "bind-port", "p", 80, "The bind port for the server")
+	RootCmd.PersistentFlags().IntVarP(&logger.Level, "verbose", "v", 4, "Verbosity level 0 (off) to 4 (most).")
 }

@@ -44,7 +44,7 @@ compile: ## Compile the binary into bin/api-server
 	go build -o bin/api-server main.go
 
 install: ## Create the api-server executable in $GOPATH/bin directory.
-	install -m 0755 bin/api-server ${GOPATH}/bin/kubicorn-controller
+	install -m 0755 bin/api-server ${GOPATH}/bin/api-server
 
 gofmt: install-tools ## Go fmt your code
 	echo "Fixing format of go files..."; \

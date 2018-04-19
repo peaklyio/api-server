@@ -20,5 +20,5 @@ func RegisterHandler() {
 }
 
 func nothingHandler(w http.ResponseWriter, r *http.Request) {
-
+	w.Write([]byte("nothing..."))
 }
