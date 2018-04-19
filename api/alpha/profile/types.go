@@ -6,6 +6,7 @@ import (
 
 type Profile struct {
 	object.Object
-	FirstName string
-	LastName  string
+	FirstName    string
+	LastName     string
+	EmailAddress string
 }
