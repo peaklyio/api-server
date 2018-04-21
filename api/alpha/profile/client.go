@@ -2,7 +2,6 @@ package profile
 
 import (
 	"github.com/peaklyio/api-server/db"
-	"gopkg.in/mgo.v2/bson"
 )
 
 func GetProfile(query *Profile) (*Profile, error) {
@@ -13,14 +12,11 @@ func GetProfile(query *Profile) (*Profile, error) {
 }
 
 func SaveProfile(newProfile *Profile) (*Profile, error) {
-	if newProfile.UniqueString == "" {
-		newProfile.UniqueString = newProfile.EmailAddress
-	}
+	newProfile.Uniq = newProfile.EmailAddress
 	dbi := db.Get()
-	id, err := dbi.Save(db.Domain, Namespace, newProfile)
+	err := dbi.Save(db.Domain, Namespace, newProfile.Uniq, newProfile)
 	if err != nil {
 		return nil, err
 	}
-	newProfile.ID = bson.ObjectIdHex(id)
 	return newProfile, nil
 }

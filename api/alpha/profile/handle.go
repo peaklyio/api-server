@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/kubicorn/kubicorn/pkg/logger"
-	"gopkg.in/mgo.v2/bson"
+	//"gopkg.in/mgo.v2/bson"
 )
 
 const Namespace = "profile"
@@ -83,7 +83,7 @@ func getProfile(r *http.Request) (*Profile, error) {
 	values := r.URL.Query()
 	p.FirstName = values.Get("FirstName")
 	p.LastName = values.Get("LastName")
-	p.ID = bson.ObjectIdHex(values.Get("ID"))
+	//p.Uniq = bson.ObjectIdHex(values.Get("ID"))
 	return p, nil
 }
 

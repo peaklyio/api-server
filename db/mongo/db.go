@@ -42,15 +42,19 @@ func GetMongo() *Mongo {
 	return m
 }
 
-func (m *Mongo) Save(domain, namespace string, object interface{}) (string, error) {
+func (m *Mongo) Save(domain, namespace, uniq string, object interface{}) error {
 	db := m.Session.DB(domain)
 	collection := db.C(namespace)
-	i, err := collection.Upsert(object, bson.M{"$set": object})
-	if err != nil {
-		return "", fmt.Errorf("Unable to upsert into mongo: %v", err)
+	q := struct {
+		Uniq string
+	}{
+		Uniq: uniq,
 	}
-	bsonId := i.UpsertedId.(bson.ObjectId)
-	return bsonId.Hex(), nil
+	_, err := collection.Upsert(q, bson.M{"$set": object})
+	if err != nil {
+		return fmt.Errorf("Unable to upsert into mongo: %v", err)
+	}
+	return nil
 }
 
 func (m *Mongo) Get(domain, namespace string, query, new interface{}) (interface{}, error) {

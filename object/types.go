@@ -5,7 +5,8 @@ import (
 )
 
 type Object struct {
-	Type         string
-	MongoID      bson.ObjectId
-	UniqueString string
+	Type    string
+	MongoID bson.ObjectId `bson:"_id,omitempty"`
+	Name    string
+	Uniq    string
 }
