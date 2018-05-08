@@ -8,7 +8,7 @@ REGISTRY ?= peaklyio
 IMAGE = $(REGISTRY)/$(TARGET)
 DIR := ${CURDIR}
 DOCKER ?= docker
-
+PKGS=$(shell go list ./... | grep -v /vendor)
 GIT_VERSION ?= $(shell git describe --always --dirty)
 IMAGE_VERSION ?= $(shell git describe --always --dirty)
 IMAGE_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD | sed 's/\///g')
@@ -56,6 +56,10 @@ gofmt: install-tools ## Go fmt your code
 
 check-headers: ## Check if the headers are valid. This is ran in CI.
 	./scripts/check-header.sh
+
+.PHONY: test
+test: ## Run the INTEGRATION TESTS. This will create cloud resources and potentially cost money.
+	go test -timeout 20m -v $(PKGS)
 
 .PHONY: check-code
 check-code: install-tools ## Run code checks

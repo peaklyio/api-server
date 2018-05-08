@@ -18,7 +18,7 @@ import (
 	"os"
 
 	"github.com/kubicorn/kubicorn/pkg/logger"
-	"github.com/peaklyio/api-server/db/mongo"
+	"github.com/peaklyio/api-server/mongo"
 	"github.com/peaklyio/api-server/server"
 	"github.com/spf13/cobra"
 )
@@ -62,4 +62,5 @@ func init() {
 	RootCmd.Flags().StringVarP(&o.DatabaseOptions.MongoOptions.Address, "mongo-address", "M", "localhost", "The address to look for a mongo server")
 	RootCmd.Flags().StringVarP(&o.Domain, "domain", "d", "peakly", "The master domain string to use for the database.")
 	RootCmd.Flags().IntVarP(&o.DatabaseOptions.MongoOptions.Port, "mongo-port", "m", 27017, "The port to use when looking for a mongo server")
+	RootCmd.Flags().StringVarP(&o.DatabaseOptions.MongoOptions.Database, "database", "D", "dev", "The database name to use")
 }

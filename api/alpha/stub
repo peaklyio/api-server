@@ -1,0 +1,74 @@
+package user
+
+import (
+	"net/http"
+	"github.com/kubicorn/kubicorn/pkg/logger"
+	"fmt"
+)
+
+func UserHandler(w http.ResponseWriter, r *http.Request) {
+	logger.Debug("/profile [%s]", r.Method)
+	switch r.Method {
+
+	// -----------------------------------------------------------------------------------------------------------------
+	//
+	// [GET]
+	//
+	//
+	case "GET":
+		//p, err := getProfile(r)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusBadRequest)
+		//	w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+		//	return
+		//}
+		//pp, err := GetProfile(p)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusBadRequest)
+		//	w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+		//	return
+		//}
+		//bytes, err := json.Marshal(pp)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusInternalServerError)
+		//	w.Write([]byte(fmt.Sprintf("500 - Internal server error: %v\n", err)))
+		//	return
+		//}
+		//w.WriteHeader(http.StatusOK)
+		//w.Write(bytes)
+		return
+		// -----------------------------------------------------------------------------------------------------------------
+		//
+		// [POST]
+		//
+		//
+	case "POST":
+		//p, err := getPostProfile(r)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusBadRequest)
+		//	w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+		//	return
+		//}
+		//pp, err := SaveProfile(p)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusBadRequest)
+		//	w.Write([]byte(fmt.Sprintf("400 - Bad request: %v\n", err)))
+		//	return
+		//}
+		//bytes, err := json.Marshal(pp)
+		//if err != nil {
+		//	w.WriteHeader(http.StatusInternalServerError)
+		//	w.Write([]byte(fmt.Sprintf("500 - Internal server error: %v\n", err)))
+		//	return
+		//}
+		//w.WriteHeader(http.StatusOK)
+		//w.Write(bytes)
+		//return
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(fmt.Sprintf("405 - Method [%s] not allowed\n", r.Method)))
+		return
+	}
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("404 - Not found\n"))
+}

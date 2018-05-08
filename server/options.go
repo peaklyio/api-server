@@ -1,6 +1,6 @@
 package server
 
-import "github.com/peaklyio/api-server/db/mongo"
+import "github.com/peaklyio/api-server/mongo"
 
 type ServerOptions struct {
 	BindAddress     string
